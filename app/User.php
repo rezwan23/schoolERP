@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Role;
 use App\Models\Student;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -53,5 +54,10 @@ class User extends Authenticatable
                 return 'Admin';
                 break;
         }
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

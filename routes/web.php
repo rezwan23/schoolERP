@@ -15,20 +15,30 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Auth::routes();
+Auth::routes(['register'=>false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware'=>'auth'], function(){
-    Route::get('/dashboard', 'AdminController@index');
-    Route::resource('student', 'StudentController');
-    Route::resource('teacher', 'TeacherController');
-    Route::resource('librarian', 'LibrarianController');
-    Route::resource('class', 'ClassController');
-    Route::resource('time', 'TimeTableController');
-    Route::resource('fee', 'FeeController');
-    Route::resource('event', 'EventController');
-    Route::resource('book', 'BookController');
-    Route::resource('assignment', 'AssignmentController');
-    Route::resource('attendance', 'AttendanceController');
-    Route::resource('result', 'ResultController');
+    Route::get('/dashboard', 'AdminController@index')->name('dashboard');
+    Route::resource('student', 'StudentController')->middleware('can:student-crud');
+    Route::resource('teacher', 'TeacherController')->middleware('can:teacher-crud');
+    Route::resource('librarian', 'LibrarianController')->middleware('can:librarian-crud');
+    Route::resource('class', 'ClassController')->middleware('can:class-crud');
+    Route::resource('time', 'TimeTableController')->middleware('can:time-table-crud');
+    Route::resource('fee', 'FeeController')->middleware('can:fee-crud');
+    Route::resource('event', 'EventController')->middleware('can:event-crud');
+    Route::resource('book', 'BookController')->middleware('can:book-crud');
+    Route::resource('assignment', 'AssignmentController')->middleware('can:assignment-crud');
+    Route::resource('attendance', 'AttendanceController')->middleware('can:attendance-crud');
+    Route::resource('result', 'ResultController')->middleware('can:result-crud');
+    Route::get('profile', 'AdminController@profile')->name('profile');
+    Route::post('profile', 'AdminController@update');
+    Route::post('change-password', 'AdminController@changePassword')->name('password.change');
+    Route::get('issue-book', 'AdminController@bookIssueForm')->name('book.issue')->middleware('can:book-issue-crud');
+    Route::get('issue-book/all', 'AdminController@allIssuedBooks')->name('book.issued')->middleware('can:book-issue-crud');
+    Route::get('issue-book/{book}/return', 'AdminController@returnBook')->name('book.returned');
+    Route::post('issue-book', 'AdminController@bookIssue');
+    Route::resource('role', 'RoleController')->middleware('can:set-permission');
+    Route::get('role/{role}/set-permission', 'RoleController@setPermission')->name('set-permission');
+    Route::post('role/{role}/set-permission', 'RoleController@assignPermission');
 });

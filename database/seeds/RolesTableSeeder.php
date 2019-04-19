@@ -12,8 +12,6 @@ class r extends Seeder
     public function run()
     {
         \Illuminate\Support\Facades\DB::table('roles')->insert([[
-            'name'  =>  'Super Admin',
-        ],[
             'name'  =>  'Teacher',
         ],[
             'name'  =>  'Librarian',

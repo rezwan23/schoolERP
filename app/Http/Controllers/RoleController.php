@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CollegeClass;
-use App\Models\Result;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class ResultController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class ResultController extends Controller
      */
     public function index()
     {
-        return view('result.index', ['results'=>Result::all()]);
+        return view('role.index', ['roles'=>Role::all()]);
     }
 
     /**
@@ -25,7 +25,7 @@ class ResultController extends Controller
      */
     public function create()
     {
-        return view('result.create', ['classes'=>CollegeClass::all()]);
+        return view('role.create');
     }
 
     /**
@@ -36,14 +36,8 @@ class ResultController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('result')){
-            $result = $request->file('result')->store('/');
-        }
-        Result::create([
-            'class_id'  =>  $request->class_id,
-            'result'    =>  $result,
-        ]);
-        return redirect()->route('result.index')->with('success-message', 'Result Added Successfully!');
+        role::create(['name'=>$request->name]);
+        return redirect()->route('role.index')->with('success-message', 'Role Created Successfully!');
     }
 
     /**
@@ -63,9 +57,9 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Result $result)
+    public function edit(Role $role)
     {
-        return view('result.edit', ['result' => $result]);
+        return view('role.edit', ['role'=>$role]);
     }
 
     /**
@@ -75,16 +69,12 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Result $result)
+    public function update(Request $request, Role $role)
     {
-        if($request->hasFile('result')){
-            $result = $request->file('result')->store('/');
-        }
-        $result->update([
-            'class_id'  =>  $request->class_id,
-            'result'    =>  $result,
+        $role->update([
+            'name'  =>  $request->name,
         ]);
-        return redirect()->route('result.index')->with('success-message', 'Result Updated Successfully!');
+        return redirect()->route('role.index')->with('success-message', 'Role Updated Successfully!');
     }
 
     /**
@@ -93,9 +83,19 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Result $result)
+    public function destroy($id)
     {
-        $result->delete();
-        return back()->with('success-message', 'Result Deleted Successfully!');
+
+    }
+
+    public function setPermission(Role $role)
+    {
+        return view('role.set-permission', ['role'=>$role, 'permissions'=>Permission::all()]);
+    }
+
+    public function assignPermission(Request $request, Role $role)
+    {
+        $role->permissions()->sync($request->permission_id);
+        return back()->with('success-message', 'Permission Assigned');
     }
 }
