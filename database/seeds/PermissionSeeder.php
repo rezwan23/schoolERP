@@ -11,6 +11,13 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
+        \Illuminate\Support\Facades\DB::table('roles')->insert([[
+            'name'  =>  'Teacher',
+        ],[
+            'name'  =>  'Librarian',
+        ],[
+            'name'  =>  'Student'
+        ]]);
         \App\Models\Permission::insert([
             ['name'=>'Student Crud', 'permission'=>'student-crud'],
             ['name'=>'Teacher Crud', 'permission'=>'teacher-crud'],

@@ -11,15 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', 'FrontEndController@index')->name('home');
+Route::get('/about', 'FrontEndController@about')->name('about.show');
+Route::get('/contact', 'FrontEndController@contact')->name('contact');
 
 Auth::routes(['register'=>false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/dashboard', 'AdminController@index')->name('dashboard');
+
+
+    Route::get('/admin/about', 'AdminController@about')->name('about');
+    Route::post('/admin/about', 'AdminController@store');
+    Route::get('/admin/meta', 'AdminController@meta')->name('meta');
+    Route::post('/admin/meta', 'AdminController@metaStore')->name('meta');
+
+
+
     Route::resource('student', 'StudentController')->middleware('can:student-crud');
     Route::resource('teacher', 'TeacherController')->middleware('can:teacher-crud');
     Route::resource('librarian', 'LibrarianController')->middleware('can:librarian-crud');

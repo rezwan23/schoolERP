@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
 use App\Models\Book;
 use App\Models\CollegeClass;
 use App\Models\IssueBook;
 use App\Models\Librarian;
+use App\Models\SiteMeta;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -77,5 +79,47 @@ class AdminController extends Controller
     {
         $book->markAsReturned();
         return redirect()->route('book.issued')->with('success-message', 'Book Returned');
+    }
+
+    public function about()
+    {
+        return view('about', ['about'=>About::find(1)]);
+    }
+
+    public function store(Request $request)
+    {
+        $about = About::find(1);
+        if($about){
+            $about->update(['about'=>$request->about]);
+            return back()->with('success-message', 'About Edited Successflly!');
+        }
+        About::create(['about'=>$request->about]);
+        return back()->with('success-message', 'About Edited Successflly!');
+    }
+
+    public function meta()
+    {
+        return view('meta', ['meta' => SiteMeta::find(1)]);
+    }
+
+    public function metaStore(Request $request)
+    {
+        $data = $this->validate($request, [
+            'title' =>  'required',
+            'logo'  =>  '',
+            'email' =>  'required',
+            'phone' =>  'required',
+            'address'   =>  'required'
+        ]);
+        if($request->hasFile('logo')){
+            $data['logo'] = $request->file('logo')->store('/');
+        }
+        $sitemeta = SiteMeta::find(1);
+        if($sitemeta){
+            $sitemeta->update($data);
+            return back()->with('success-message', 'Meta Added Sucessfully!');
+        }
+        SiteMeta::create($data);
+        return back()->with('success-message', 'Meta Added Sucessfully!');
     }
 }

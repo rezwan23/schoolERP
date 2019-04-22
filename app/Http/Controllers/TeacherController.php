@@ -115,8 +115,9 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        $teacher->user()->delete();
+        $user = $teacher->user();
         $teacher->delete();
+        $user->delete();
         return back()->with('success-message', 'Teacher Data Deleted Successfully!');
     }
 }

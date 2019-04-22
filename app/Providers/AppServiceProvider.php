@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -43,5 +44,10 @@ class AppServiceProvider extends ServiceProvider
                 });
             });
         }
+
+        View::composer(
+            ['user.master'],
+            'App\Http\View\Composer\DataComposer'
+        );
     }
 }

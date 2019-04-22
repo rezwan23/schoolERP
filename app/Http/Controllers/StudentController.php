@@ -41,16 +41,16 @@ class StudentController extends Controller
     {
         $data = $this->validate($request, [
             'name'  =>  'required',
-            'gender' =>  'required',
-            'class_id'  =>  'required',
-            'email' => 'required|unique:users',
-            'dob'   =>  'required',
-            'nationality'   =>  'required',
-            'nid_number'    =>  'required',
-            'permanent_address' =>  'required',
-            'present_address'   =>  'required',
-            'photo' =>  'required|image',
-            'roll'  =>  'required,'
+            'gender' =>  '',
+            'class_id'  =>  '',
+            'email' => 'unique:users',
+            'dob'   =>  '',
+            'nationality'   =>  '',
+            'nid_number'    =>  '',
+            'permanent_address' =>  '',
+            'present_address'   =>  '',
+            'photo' =>  '',
+            'roll'  =>  ''
 
         ]);
         $image = $request->file('photo');

@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Roll</label>
-                        <input class="form-control" type="email" name="roll" placeholder="Enter student roll">
+                        <input class="form-control" type="text" name="roll" placeholder="Enter student roll">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Email</label>
