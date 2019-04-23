@@ -48,10 +48,13 @@ class AdminController extends Controller
 
     public function update(Request $request)
     {
+	$user = auth()->user();
         if($request->hasFile('photo')){
             $photo = $request->file('photo')->store('/');
+	    $user->photo = $photo;
         }
-        auth()->user()->update(['name'  =>  $request->name, 'photo'=>$photo]);
+	$user->name = $request->name;
+        $user->update();
         return back()->with('success-message', 'User Updated Successfully!');
     }
 

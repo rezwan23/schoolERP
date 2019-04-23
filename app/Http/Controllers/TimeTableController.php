@@ -37,7 +37,7 @@ class TimeTableController extends Controller
     public function store(Request $request)
     {
         $classId = $request->class_id;
-        if(CollegeClass::find($classId)->time->count()>0){
+        if(CollegeClass::find($classId)->time!==null){
             return back()->withErrors(['error-message'=>'Time Table Has Been Set For ths Class']);
         }
         if($request->hasFile('time_table')){
