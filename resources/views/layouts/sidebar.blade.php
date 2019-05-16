@@ -54,5 +54,15 @@
             </ul>
         </li>
                 @endcan
+        @can('send-sms')
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">SMS</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="{{route('sms.new')}}"><i class="icon fa fa-circle-o"></i> New Sms</a></li>
+                <li><a class="treeview-item" href="{{route('sms.group')}}"><i class="icon fa fa-circle-o"></i> Group Sms</a></li>
+                <li><a class="treeview-item" href="{{route('sms.group.create')}}"><i class="icon fa fa-circle-o"></i> Create Sms Group</a></li>
+                {{--<li><a class="treeview-item" href="{{route('sms.config')}}"><i class="icon fa fa-circle-o"></i> Config</a></li>--}}
+            </ul>
+        </li>
+            @endcan
     </ul>
 </aside>

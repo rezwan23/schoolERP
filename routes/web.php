@@ -50,4 +50,13 @@ Route::group(['middleware'=>'auth'], function(){
     Route::resource('role', 'RoleController')->middleware('can:set-permission');
     Route::get('role/{role}/set-permission', 'RoleController@setPermission')->name('set-permission');
     Route::post('role/{role}/set-permission', 'RoleController@assignPermission');
+    Route::get('/sms/smart', 'SMSConfigController@showConfigForm')->name('sms.config')->middleware('can:send-sms');
+    Route::post('/sms/smart', 'SMSConfigController@saveConfig')->name('sms.config')->middleware('can:send-sms');
+    Route::get('sms/new', 'SMSConfigController@newSms')->name('sms.new')->middleware('can:send-sms');
+    Route::post('sms/new', 'SMSConfigController@newSmsSend')->name('sms.new')->middleware('can:send-sms');
+    Route::get('sms/group', 'SMSConfigController@groupSms')->name('sms.group')->middleware('can:send-sms');
+    Route::post('sms/group', 'SMSConfigController@groupSmsSend')->middleware('can:send-sms');
+    Route::get('sms/index', 'SMSConfigController@index')->name('sms.index')->middleware('can:send-sms');
+    Route::get('sms/group/create', 'SMSConfigController@createGroup')->name('sms.group.create')->middleware('can:send-sms');
+    Route::post('sms/group/create', 'SMSConfigController@storeGroup')->middleware('can:send-sms');
 });
