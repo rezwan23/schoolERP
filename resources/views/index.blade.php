@@ -6,7 +6,7 @@
     <div class="app-title">
         <div>
             <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
-            <p>College Management System</p>
+            <p>School Management System</p>
         </div>
     </div>
     <div class="row">
