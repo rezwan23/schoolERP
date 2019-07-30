@@ -45,7 +45,7 @@
                         <input type="password" required name="old_password" class="form-control">
                         <label for="">Password</label>
                         <input type="password" required name="password" class="form-control">
-                        <label for="">Old Password</label>
+                        <label for="">Confirm Password</label>
                         <input type="password" required name="password_confirmation" class="form-control">
                         <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                     </form>

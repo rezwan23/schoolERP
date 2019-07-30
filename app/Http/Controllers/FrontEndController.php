@@ -12,7 +12,7 @@ class FrontEndController extends Controller
 {
     public function index()
     {
-        return view('user.index', ['teachers'=>Teacher::all(), 'students'=>Student::all()]);
+        return view('user.index1');
     }
 
     public function about()
